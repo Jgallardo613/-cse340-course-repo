@@ -39,10 +39,6 @@ app.get('/categories', (req, res) => {
   res.render('categories', { title: 'Categories' });
 });
 
-app.use((req, res) => {
-  res.status(404).render('404');
-});
-
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
