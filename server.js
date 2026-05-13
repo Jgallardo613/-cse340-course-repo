@@ -1,36 +1,44 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { getAllOrganizations } from './src/models/organizations.js';
+import { getAllProjects } from './src/models/projects.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Static middleware
 app.use(express.static('public'));
-
-// View engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-// Routes
 app.get('/', (req, res) => {
   res.render('home', { title: 'Home' });
 });
 
-app.get('/organizations', (req, res) => {
-  res.render('organizations', { title: 'Organizations' });
+app.get('/organizations', async (req, res) => {
+  try {
+    const organizations = await getAllOrganizations();
+    res.render('organizations', { title: 'Organizations', organizations });
+  } catch (err) {
+    res.status(500).send('Error loading organizations');
+  }
 });
 
-app.get('/projects', (req, res) => {
-  res.render('projects', { title: 'Projects' });
+app.get('/projects', async (req, res) => {
+  try {
+    const projects = await getAllProjects();
+    console.log(projects); // verify in console
+    res.render('projects', { title: 'Projects', projects });
+  } catch (err) {
+    res.status(500).send('Error loading projects');
+  }
 });
 
 app.get('/categories', (req, res) => {
   res.render('categories', { title: 'Categories' });
 });
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).render('404');
 });
