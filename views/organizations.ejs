@@ -1,21 +1,19 @@
 <%- include('partials/header') %>
-
 <h1><%= title %></h1>
-
 <% if (organizations && organizations.length > 0) { %>
   <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-    <% organizations.forEach((org, index) => { %>
+    <% organizations.forEach(org => { %>
       <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; text-align: center; background: #f9f9f9;">
-        <img src="/images/organizations<%= index + 1 %>.jpg" 
+        <img src="/images/<%= org.logo_filename %>" 
              alt="<%= org.name %>" 
              style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px; margin-bottom: 15px;">
         <h3 style="color: #007bff;"><%= org.name %></h3>
         <p><%= org.description %></p>
+        <p><a href="mailto:<%= org.contact_email %>"><%= org.contact_email %></a></p>
       </div>
     <% }) %>
   </div>
 <% } else { %>
   <p>No organizations found.</p>
 <% } %>
-
 <%- include('partials/footer') %>

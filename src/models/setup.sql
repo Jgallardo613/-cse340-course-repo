@@ -6,13 +6,15 @@ DROP TABLE IF EXISTS organization;
 CREATE TABLE organization (
     organization_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT
+    description TEXT NOT NULL,
+    contact_email VARCHAR(255) NOT NULL,
+    logo_filename VARCHAR(255) NOT NULL
 );
 
-INSERT INTO organization (name, description) VALUES
-    ('Community Outreach', 'Helping local communities through various service projects.'),
-    ('Volunteer Network', 'Connecting volunteers with meaningful opportunities.'),
-    ('Service Alliance', 'Building partnerships for community development.');
+INSERT INTO organization (name, description, contact_email, logo_filename) VALUES
+    ('Community Outreach', 'Helping local communities through various service projects.', 'info@communityoutreach.org', 'organizations1.jpg'),
+    ('Volunteer Network', 'Connecting volunteers with meaningful opportunities.', 'info@volunteernetwork.org', 'organizations3.jpg'),
+    ('Service Alliance', 'Building partnerships for community development.', 'info@servicealliance.org', 'organizations2.jpg');
 
 CREATE TABLE service_projects (
     project_id SERIAL PRIMARY KEY,
@@ -40,12 +42,12 @@ INSERT INTO service_projects (organization_id, title, description, location, pro
     (3, 'Health Screening', 'Free health checkups for residents', 'Idaho Falls, ID', '2026-08-22'),
     (3, 'Youth Sports Day', 'Free sports activities for kids', 'Rexburg, ID', '2026-08-29');
 
-CREATE TABLE IF NOT EXISTS categories (
+CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS project_categories (
+CREATE TABLE project_categories (
     project_id INTEGER NOT NULL REFERENCES service_projects(project_id) ON DELETE CASCADE,
     category_id INTEGER NOT NULL REFERENCES categories(category_id) ON DELETE CASCADE,
     PRIMARY KEY (project_id, category_id)
