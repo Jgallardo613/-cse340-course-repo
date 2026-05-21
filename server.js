@@ -2,12 +2,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { getAllOrganizations } from './src/models/organizations.js';
-import { getAllProjects } from './src/models/projects.js';
+import { getAllOrganizations, getOrganizationDetails } from './src/models/organizations.js';
+import { getAllProjects, getUpcomingProjects, getProjectDetails } from './src/models/projects.js';
 import { getAllCategories } from './src/models/categories.js';
 
 const app = express();
 const PORT = 3000;
+const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -26,10 +27,28 @@ app.get('/organizations', async (req, res, next) => {
   }
 });
 
+app.get('/organization/:id', async (req, res, next) => {
+  try {
+    const organization = await getOrganizationDetails(req.params.id);
+    res.render('organization', { title: organization.name, organization });
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get('/projects', async (req, res, next) => {
   try {
-    const projects = await getAllProjects();
-    res.render('projects', { title: 'Projects', projects });
+    const projects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
+    res.render('projects', { title: 'Upcoming Service Projects', projects });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/project/:id', async (req, res, next) => {
+  try {
+    const project = await getProjectDetails(req.params.id);
+    res.render('project', { title: project.title, project });
   } catch (err) {
     next(err);
   }

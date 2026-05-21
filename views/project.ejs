@@ -1,0 +1,9 @@
+<%- include('partials/header') %>
+<h1><%= project.title %></h1>
+<div style="background: #f8f9fa; border-left: 5px solid #007bff; border-radius: 8px; padding: 20px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);">
+  <p><strong>Description:</strong> <%= project.description %></p>
+  <p><strong>Date:</strong> <%= new Date(project.project_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+  <p><strong>Location:</strong> <%= project.location %></p>
+  <p><strong>Organization:</strong> <a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a></p>
+</div>
+<%- include('partials/footer') %>
