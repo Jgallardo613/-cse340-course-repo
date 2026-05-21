@@ -1,0 +1,12 @@
+<%- include('partials/header') %>
+<h1><%= category.name %></h1>
+<% if (projects && projects.length > 0) { %>
+  <ul>
+    <% projects.forEach(project => { %>
+      <li><a href="/project/<%= project.project_id %>"><%= project.title %></a></li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <p>No service projects found for this category.</p>
+<% } %>
+<%- include('partials/footer') %>

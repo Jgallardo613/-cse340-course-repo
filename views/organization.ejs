@@ -4,4 +4,14 @@
   <p><strong>Description:</strong> <%= organization.description %></p>
   <p><strong>Contact:</strong> <%= organization.contact_email %></p>
 </div>
+<h2>Service Projects</h2>
+<% if (projects && projects.length > 0) { %>
+  <ul>
+    <% projects.forEach(project => { %>
+      <li><a href="/project/<%= project.project_id %>"><%= project.title %></a></li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <p>No service projects found for this organization.</p>
+<% } %>
 <%- include('partials/footer') %>
