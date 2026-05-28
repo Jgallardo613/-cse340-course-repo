@@ -1,5 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import session from 'express-session';
+import flash from 'connect-flash';
 dotenv.config();
 
 import router from './src/routes/index.js';
@@ -10,6 +12,21 @@ const PORT = 3000;
 app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'secret',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.messages = req.flash();
+  next();
+});
 
 app.get('/', (req, res) => {
   res.render('home', { title: 'Home' });
