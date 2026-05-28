@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+<h1><%= title %></h1>
+<h2 style="color: #6c757d; margin-top: 0;"><%= project.title %></h2>
+
+<div style="background: #f8f9fa; border-left: 5px solid #6f42c1; border-radius: 8px; padding: 20px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); max-width: 600px;">
+  <form action="/assign-categories/<%= project.project_id %>" method="POST">
+
+    <p><strong>Select categories for this project:</strong></p>
+
+    <% if (allCategories && allCategories.length > 0) { %>
+      <% allCategories.forEach(category => { %>
+        <div style="margin-bottom: 10px;">
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+            <input
+              type="checkbox"
+              name="categories"
+              value="<%= category.category_id %>"
+              <%= assignedIds.includes(category.category_id) ? 'checked' : '' %>
+              style="width: 18px; height: 18px;">
+            <%= category.name %>
+          </label>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No categories available. <a href="/new-category">Create one first.</a></p>
+    <% } %>
+
+    <div style="margin-top: 20px;">
+      <button type="submit"
+        style="padding: 10px 20px; background: #6f42c1; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Save Categories
+      </button>
+      <a href="/project/<%= project.project_id %>"
+        style="margin-left: 10px; color: #6c757d;">Cancel</a>
+    </div>
+
+  </form>
+</div>
+<%- include('partials/footer') %>
