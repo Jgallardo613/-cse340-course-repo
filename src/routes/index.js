@@ -1,12 +1,16 @@
 import express from 'express';
 const router = express.Router();
 
-import { buildOrganizationList, buildOrganizationDetail } from '../controllers/organizationsController.js';
+import { buildOrganizationList, buildOrganizationDetail, organizationValidation, showNewOrganizationForm, processNewOrganizationForm, showEditOrganizationForm, processEditOrganizationForm } from '../controllers/organizationsController.js';
 import { buildProjectList, buildProjectDetail, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm } from '../controllers/projectsController.js';
 import { buildCategoryList, buildCategoryDetail, categoryValidation, showNewCategoryForm, processNewCategoryForm, showEditCategoryForm, processEditCategoryForm, showAssignCategoriesForm, processAssignCategoriesForm } from '../controllers/categoriesController.js';
 
 router.get('/organizations', buildOrganizationList);
 router.get('/organization/:id', buildOrganizationDetail);
+router.get('/new-organization', showNewOrganizationForm);
+router.post('/new-organization', organizationValidation, processNewOrganizationForm);
+router.get('/edit-organization/:id', showEditOrganizationForm);
+router.post('/edit-organization/:id', organizationValidation, processEditOrganizationForm);
 
 router.get('/projects', buildProjectList);
 router.get('/project/:id', buildProjectDetail);
