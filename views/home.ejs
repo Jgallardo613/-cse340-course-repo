@@ -1,5 +1,21 @@
 <%- include('partials/header') %>
-  <h1><%= title %></h1>
-  <img src="/images/home.jpg" alt="Welcome to Service Site" style="max-width: 100%; height: auto; margin-bottom: 1rem;">
-  <p>Welcome to the Service Site.</p>
+
+<div style="padding: 20px;">
+  <h1>Welcome to Service Site</h1>
+  <img src="/images/home.jpg" alt="Welcome to Service Site" style="max-width: 100%; height: auto; margin-bottom: 1rem; border-radius: 8px;">
+  <p style="font-size: 1.1rem; color: #555;">Connecting volunteers with meaningful service opportunities in your community.</p>
+
+  <div style="margin-top: 20px;">
+    <a href="/organizations" style="margin-right: 10px;">Browse Organizations</a>
+    <a href="/projects" style="margin-right: 10px;">Browse Projects</a>
+    <a href="/categories">Browse Categories</a>
+  </div>
+
+  <% if (isLoggedIn) { %>
+    <div style="margin-top: 20px;">
+      <a href="/dashboard" style="padding: 10px 20px; background: #007bff; color: white; border-radius: 5px; text-decoration: none;">My Dashboard</a>
+    </div>
+  <% } %>
+</div>
+
 <%- include('partials/footer') %>

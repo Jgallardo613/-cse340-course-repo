@@ -1,7 +1,9 @@
 <%- include('partials/header') %>
 <h1><%= title %></h1>
 
-<a href="/new-organization" style="display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #007bff; color: white; border-radius: 5px; text-decoration: none;">+ Add New Organization</a>
+<% if (user && user.role_name === 'admin') { %>
+  <a href="/new-organization" style="display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #007bff; color: white; border-radius: 5px; text-decoration: none;">+ Add New Organization</a>
+<% } %>
 
 <% if (organizations && organizations.length > 0) { %>
   <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
@@ -13,6 +15,9 @@
         <h3><a href="/organization/<%= org.organization_id %>" style="color: #007bff;"><%= org.name %></a></h3>
         <p><%= org.description %></p>
         <p><a href="mailto:<%= org.contact_email %>"><%= org.contact_email %></a></p>
+        <% if (user && user.role_name === 'admin') { %>
+          <a href="/edit-organization/<%= org.organization_id %>">Edit</a>
+        <% } %>
       </div>
     <% }) %>
   </div>

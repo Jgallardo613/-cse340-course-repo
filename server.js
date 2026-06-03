@@ -26,6 +26,7 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.messages = req.flash();
   res.locals.isLoggedIn = req.session && req.session.user ? true : false;
+  res.locals.user = req.session ? req.session.user : null;
   next();
 });
 
