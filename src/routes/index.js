@@ -4,6 +4,7 @@ const router = express.Router();
 import { buildOrganizationList, buildOrganizationDetail, organizationValidation, showNewOrganizationForm, processNewOrganizationForm, showEditOrganizationForm, processEditOrganizationForm } from '../controllers/organizationsController.js';
 import { buildProjectList, buildProjectDetail, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm } from '../controllers/projectsController.js';
 import { buildCategoryList, buildCategoryDetail, categoryValidation, showNewCategoryForm, processNewCategoryForm, showEditCategoryForm, processEditCategoryForm, showAssignCategoriesForm, processAssignCategoriesForm } from '../controllers/categoriesController.js';
+import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, showDashboard } from '../controllers/users.js';
 
 router.get('/organizations', buildOrganizationList);
 router.get('/organization/:id', buildOrganizationDetail);
@@ -28,5 +29,12 @@ router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
 
 router.get('/assign-categories/:id', showAssignCategoriesForm);
 router.post('/assign-categories/:id', processAssignCategoriesForm);
+
+router.get('/register', showUserRegistrationForm);
+router.post('/register', processUserRegistrationForm);
+router.get('/login', showLoginForm);
+router.post('/login', processLoginForm);
+router.get('/logout', processLogout);
+router.get('/dashboard', requireLogin, showDashboard);
 
 export default router;
