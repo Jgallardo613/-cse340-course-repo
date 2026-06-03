@@ -2,6 +2,18 @@ DROP TABLE IF EXISTS project_categories;
 DROP TABLE IF EXISTS service_projects;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS organization;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
+
+CREATE TABLE roles (
+    role_id SERIAL PRIMARY KEY,
+    role_name VARCHAR(50) UNIQUE NOT NULL,
+    role_description TEXT
+);
+
+INSERT INTO roles (role_name, role_description) VALUES 
+    ('user', 'Standard user with basic access'),
+    ('admin', 'Administrator with full system access');
 
 CREATE TABLE organization (
     organization_id SERIAL PRIMARY KEY,
@@ -62,3 +74,12 @@ INSERT INTO project_categories (project_id, category_id) VALUES
     (5, 1), (7, 1), (10, 1), (12, 1),
     (2, 2), (8, 2), (11, 2),
     (1, 3), (3, 3), (4, 3), (6, 3), (9, 3), (13, 3), (14, 3), (15, 3);
+
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role_id INTEGER REFERENCES roles(role_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
