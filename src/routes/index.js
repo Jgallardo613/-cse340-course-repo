@@ -1,10 +1,9 @@
 import express from 'express';
 const router = express.Router();
-
 import { buildOrganizationList, buildOrganizationDetail, organizationValidation, showNewOrganizationForm, processNewOrganizationForm, showEditOrganizationForm, processEditOrganizationForm } from '../controllers/organizationsController.js';
 import { buildProjectList, buildProjectDetail, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm } from '../controllers/projectsController.js';
 import { buildCategoryList, buildCategoryDetail, categoryValidation, showNewCategoryForm, processNewCategoryForm, showEditCategoryForm, processEditCategoryForm, showAssignCategoriesForm, processAssignCategoriesForm } from '../controllers/categoriesController.js';
-import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, requireRole, showDashboard } from '../controllers/users.js';
+import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, requireRole, showDashboard, showUsersPage } from '../controllers/users.js';
 
 router.get('/organizations', buildOrganizationList);
 router.get('/organization/:id', buildOrganizationDetail);
@@ -26,7 +25,6 @@ router.get('/new-category', requireRole('admin'), showNewCategoryForm);
 router.post('/new-category', requireRole('admin'), categoryValidation, processNewCategoryForm);
 router.get('/edit-category/:id', requireRole('admin'), showEditCategoryForm);
 router.post('/edit-category/:id', requireRole('admin'), categoryValidation, processEditCategoryForm);
-
 router.get('/assign-categories/:id', requireRole('admin'), showAssignCategoriesForm);
 router.post('/assign-categories/:id', requireRole('admin'), processAssignCategoriesForm);
 
@@ -36,5 +34,6 @@ router.get('/login', showLoginForm);
 router.post('/login', processLoginForm);
 router.get('/logout', processLogout);
 router.get('/dashboard', requireLogin, showDashboard);
+router.get('/users', requireLogin, requireRole('admin'), showUsersPage);
 
 export default router;

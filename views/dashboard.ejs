@@ -1,9 +1,10 @@
 <%- include('./partials/header', { title: 'Dashboard' }) %>
-
 <div class="container">
     <h1>Dashboard</h1>
     <p>Welcome, <%= name %>!</p>
     <p>Email: <%= email %></p>
+    <% if (role_name === 'admin') { %>
+        <a href="/users">View All Users</a>
+    <% } %>
 </div>
-
 <%- include('./partials/footer') %>
