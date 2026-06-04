@@ -32,7 +32,7 @@ const processLoginForm = async (req, res) => {
 };
 
 const processLogout = (req, res) => {
-    req.session.destroy();
+    req.session.user = null;
     req.flash('success', 'You have been logged out.');
     res.redirect('/login');
 };
