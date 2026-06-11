@@ -19,4 +19,29 @@
     </p>
   <% } %>
 </div>
+
+<% if (isLoggedIn) { %>
+  <div style="margin-top: 24px; padding: 20px; border: 2px solid #c8e6c9; border-radius: 8px; background: #f1f8f2;">
+    <% if (isVolunteer) { %>
+      <p style="font-size: 1.05rem; font-weight: bold; color: #2e7d32; margin: 0 0 12px 0;">
+        ✅ You are volunteering for this project
+      </p>
+      <form action="/volunteer/remove" method="POST">
+        <input type="hidden" name="project_id" value="<%= project.project_id %>">
+        <input type="hidden" name="source" value="detail">
+        <button type="submit" style="padding: 10px 20px; background: #c62828; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.95rem; font-weight: 600;">
+          Remove Me as Volunteer
+        </button>
+      </form>
+    <% } else { %>
+      <form action="/volunteer/add" method="POST">
+        <input type="hidden" name="project_id" value="<%= project.project_id %>">
+        <button type="submit" style="padding: 10px 20px; background: #1976d2; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.95rem; font-weight: 600;">
+          Volunteer for This Project
+        </button>
+      </form>
+    <% } %>
+  </div>
+<% } %>
+
 <%- include('partials/footer') %>

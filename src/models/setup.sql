@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS volunteers;
 DROP TABLE IF EXISTS project_categories;
 DROP TABLE IF EXISTS service_projects;
 DROP TABLE IF EXISTS categories;
@@ -82,4 +83,12 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL,
     role_id INTEGER REFERENCES roles(role_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE volunteers (
+    volunteer_id SERIAL PRIMARY KEY,
+    user_id      INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    project_id   INTEGER NOT NULL REFERENCES service_projects(project_id) ON DELETE CASCADE,
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (user_id, project_id)
 );

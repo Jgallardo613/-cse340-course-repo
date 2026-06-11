@@ -4,6 +4,7 @@ import { buildOrganizationList, buildOrganizationDetail, organizationValidation,
 import { buildProjectList, buildProjectDetail, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm } from '../controllers/projectsController.js';
 import { buildCategoryList, buildCategoryDetail, categoryValidation, showNewCategoryForm, processNewCategoryForm, showEditCategoryForm, processEditCategoryForm, showAssignCategoriesForm, processAssignCategoriesForm } from '../controllers/categoriesController.js';
 import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, requireRole, showDashboard, showUsersPage } from '../controllers/users.js';
+import { processAddVolunteer, processRemoveVolunteer } from '../controllers/volunteersController.js';
 
 router.get('/organizations', buildOrganizationList);
 router.get('/organization/:id', buildOrganizationDetail);
@@ -35,5 +36,9 @@ router.post('/login', processLoginForm);
 router.get('/logout', processLogout);
 router.get('/dashboard', requireLogin, showDashboard);
 router.get('/users', requireLogin, requireRole('admin'), showUsersPage);
+
+// W06: Volunteer routes – requireLogin protects both so only logged-in users can POST
+router.post('/volunteer/add', requireLogin, processAddVolunteer);
+router.post('/volunteer/remove', requireLogin, processRemoveVolunteer);
 
 export default router;

@@ -6,5 +6,41 @@
     <% if (role_name === 'admin') { %>
         <a href="/users">View All Users</a>
     <% } %>
+
+    <div style="margin-top: 32px;">
+        <h2>My Volunteer Projects</h2>
+        <% if (volunteerProjects && volunteerProjects.length > 0) { %>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                <% volunteerProjects.forEach(project => { %>
+                    <li style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
+                        <div>
+                            <a href="/project/<%= project.project_id %>" style="font-weight: 600; font-size: 1rem; color: #1976d2; text-decoration: none;">
+                                <%= project.title %>
+                            </a>
+                            <div style="font-size: 0.85rem; color: #555; margin-top: 3px;">
+                                <%= project.location %> &bull;
+                                <%= new Date(project.project_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                            </div>
+                            <div style="font-size: 0.78rem; color: #999; margin-top: 2px;">
+                                Signed up: <%= new Date(project.signup_date).toLocaleDateString() %>
+                            </div>
+                        </div>
+                        <form action="/volunteer/remove" method="POST" style="margin: 0;">
+                            <input type="hidden" name="project_id" value="<%= project.project_id %>">
+                            <input type="hidden" name="source" value="dashboard">
+                            <button type="submit" style="padding: 7px 16px; background: #c62828; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">
+                                Remove
+                            </button>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p style="color: #666; font-style: italic;">
+                You have not signed up for any projects yet.
+                <a href="/projects">Browse projects</a> to get started!
+            </p>
+        <% } %>
+    </div>
 </div>
 <%- include('./partials/footer') %>
